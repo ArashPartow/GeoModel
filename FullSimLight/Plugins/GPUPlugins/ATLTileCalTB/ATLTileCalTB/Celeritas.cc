@@ -22,7 +22,7 @@ SetupOptions& CelerSetupOptions()
     // Set along-step factory
     so.make_along_step = celeritas::UniformAlongStepFactory();
 
-    so.sync = false;
+    so.action_times = false;
 
     so.max_num_tracks = 65536;
     so.max_num_events = 10000;
