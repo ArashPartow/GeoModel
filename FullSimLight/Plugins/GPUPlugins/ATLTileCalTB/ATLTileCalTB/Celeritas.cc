@@ -1,6 +1,7 @@
 #include "Celeritas.hh"
 
 #include <G4Threading.hh>
+#include <G4Version.hh>
 #include <accel/AlongStepFactory.hh>
 #include <celeritas/field/UniformFieldData.hh>
 #include <celeritas/io/ImportData.hh>
@@ -29,6 +30,10 @@ SetupOptions& CelerSetupOptions()
     so.initializer_capacity = so.max_num_tracks * 128;
     so.secondary_stack_factor = 3.0;
     so.ignore_processes = {"CoulombScat"};
+    if constexpr (G4VERSION_NUMBER >= 1110)
+    {
+        so.ignore_processes.push_back("Rayl");
+    }
 
     // Use Celeritas "hit processor" to call back to Geant4 SDs.
     so.sd.enabled = true;
