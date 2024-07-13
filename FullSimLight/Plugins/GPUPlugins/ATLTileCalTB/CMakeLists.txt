@@ -1,16 +1,5 @@
 # Copyright (C) 2023 CERN for the benefit of the ATLAS collaboration
 
-# Celeritas introduced option to disable setting of track since 0.3.0
-# As this is on develop, use a compile time check of presence
-include(CheckCXXSourceCompiles)
-set(CMAKE_REQUIRED_LIBRARIES Celeritas::accel)
-check_cxx_source_compiles("
-  #include <accel/SetupOptions.hh>
-  int main() {
-    celeritas::SDSetupOptions x;
-    x.track = true;
-  }" ACCEL_HAS_SDTRACK)
-
 add_library(ATLTileCalTB SHARED
   ATLTileCalTB/ATLTileCalTBConstants.hh
   ATLTileCalTB/ATLTileCalTBEventAction.cc

@@ -1,4 +1,5 @@
 #include "Celeritas.hh"
+#include "celeritas_version.h"
 
 #include <memory>
 #include <G4Threading.hh>
@@ -25,8 +26,11 @@ SetupOptions& CelerSetupOptions()
         // Set along-step factory
         so.make_along_step = celeritas::UniformAlongStepFactory();
 
+#if CELERITAS_VERSION >= 0x000500
         so.action_times = false;
-
+#else
+        so.sync = false;
+#endif
         so.max_num_tracks = 65536;
         so.max_num_events = 10000;
         so.initializer_capacity = so.max_num_tracks * 128;

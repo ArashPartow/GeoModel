@@ -1,4 +1,5 @@
 #include "Celeritas.hh"
+#include "celeritas_version.h"
 
 #include <G4Threading.hh>
 #include <G4Version.hh>
@@ -23,7 +24,11 @@ SetupOptions& CelerSetupOptions()
     // Set along-step factory
     so.make_along_step = celeritas::UniformAlongStepFactory();
 
-    so.action_times = false;
+#if CELERITAS_VERSION >= 0x000500
+        so.action_times = false;
+#else
+        so.sync = false;
+#endif
 
     so.max_num_tracks = 65536;
     so.max_num_events = 10000;
@@ -40,7 +45,7 @@ SetupOptions& CelerSetupOptions()
 
     // Since Celeritas #839, creation of track controlled by a flag.
     // Set to true when available as TileCal scoring needs the track.
-#ifdef ACCEL_HAS_SDTRACK
+#if CELERITAS_VERSION >= 0x000301
     so.sd.track = true;
 #endif
 
